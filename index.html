@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="mr-IN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हॉटेल जलसा | Hotel Jalsa - Authentic Indian Taste</title>
+    
+    <!-- Google Fonts: Khand for Devanagari headings, Poppins for clean English text -->
+    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-maroon: #800000;
+            --saffron: #FF9933;
+            --gold: #D4AF37;
+            --beige: #FFF8EE;
+            --dark-brown: #3E2723;
+            --text-main: #2D1B14;
+            --card-light: rgba(255, 255, 255, 0.96);
+            --veg-green: #2E7D32;
+            --nonveg-red: #C62828;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(45, 27, 20, 0.55), rgba(45, 27, 20, 0.55)), 
+                        url('bg1.jpg') center/cover fixed;
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .marathi-text {
+            font-family: 'Khand', sans-serif;
+        }
+
+        /* --- 1. INTRO / LOADING SCREEN --- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            background: #000 url('bg1.jpg') center/cover no-repeat;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            object-fit: cover;
+            filter: brightness(0.4);
+        }
+
+        #intro-screen.slide-up {
+            transform: translateY(-100%);
+            pointer-events: none; 
+        }
+
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .intro-logo {
+            width: 110px;
+            height: 110px;
+            background: var(--saffron);
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            animation: bounceIn 1.4s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            overflow: hidden;
+        }
+
+        .intro-logo img {
+            width: 75%;
+            height: 75%;
+            object-fit: contain;
+        }
+
+        .intro-title {
+            font-size: 3.5rem;
+            margin-bottom: 5px;
+            color: var(--saffron);
+            text-shadow: 4px 4px 20px rgba(0,0,0,0.8);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .intro-subtitle {
+            font-size: 1.2rem;
+            animation: fadeInUp 1s ease-out 0.8s both;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 0.9; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- 2. HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--primary-maroon);
+            padding: 10px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            /* Removed Yellow Border-Bottom */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--saffron);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .header-logo img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        header h2 {
+            color: var(--saffron);
+            font-size: 1.8rem;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            line-height: 1;
+        }
+
+        .header-tagline {
+            color: white;
+            font-family: 'Khand', sans-serif;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .category-container {
+            background: rgba(255, 255, 255, 0.98);
+            position: sticky;
+            top: 89px; 
+            z-index: 900;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 8px 10px;
+            scrollbar-width: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            /* Removed Yellow Border-Bottom */
+        }
+
+        .category-container::-webkit-scrollbar { display: none; }
+
+        .cat-btn {
+            display: inline-block;
+            padding: 6px 15px;
+            margin: 0 3px;
+            border-radius: 20px;
+            border: 1px solid #eee;
+            background: #fff;
+            color: var(--dark-brown);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cat-btn.active {
+            background: var(--primary-maroon);
+            color: white;
+            border-color: var(--primary-maroon);
+            box-shadow: 0 2px 8px rgba(128,0,0,0.2);
+        }
+
+        /* --- 3. MENU CONTENT --- */
+        .menu-wrapper {
+            padding: 15px 12px 100px 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .dish-card {
+            background: var(--card-light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(128, 0, 0, 0.1);
+        }
+
+        .dish-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dish-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .dish-info {
+            padding: 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .dish-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary-maroon);
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .dish-name small {
+            display: block;
+            color: #555;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-top: 2px;
+            font-family: 'Khand', sans-serif;
+        }
+
+        .dish-price {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--dark-brown);
+        }
+
+        .view-btn {
+            background: var(--saffron);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* --- 4. MODAL (CENTERED COMPACT BOX) --- */
+        #modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            z-index: 3000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #dish-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -45%) scale(0.9);
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            z-index: 3001;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            max-height: 85vh;
+            overflow: hidden; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            visibility: hidden; 
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid var(--gold);
+        }
+
+        #dish-modal.open {
+            visibility: visible;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary-maroon);
+            line-height: 1.1;
+        }
+
+        .modal-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            font-family: 'Khand', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .modal-desc {
+            color: #555;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-stats {
+            background: var(--beige);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px dashed var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-price-label {
+            display: block;
+            font-size: 0.65rem;
+            color: #888;
+            font-weight: 700;
+        }
+
+        .modal-price-val {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+        }
+
+        .close-btn-container {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .close-modal-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-maroon);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+            header h2 { font-size: 2.2rem; }
+            .category-container { top: 96px; }
+            .menu-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+            .dish-img { height: 160px; }
+        }
+
+        .diet-icon { width: 14px; height: 14px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; }
+        .diet-icon::after { content:''; width: 8px; height: 8px; border-radius: 50%; }
+        .veg::after { background: var(--veg-green); }
+        .nonveg::after { background: var(--nonveg-red); }
+    </style>
+</head>
+<body>
+
+    <!-- 1. INTRO SCREEN -->
+    <div id="intro-screen">
+        <video autoplay muted loop playsinline class="video-bg" poster="bg1.jpg">
+            <source src="bgvideo.mp4" type="video/mp4">
+        </video>
+
+        <div class="intro-content">
+            <div class="intro-logo">
+                <img src="logo.png" alt="Hotel Jalsa Logo">
+            </div>
+            <h1 class="intro-title">हॉटेल जलसा</h1>
+            <p class="intro-subtitle marathi-text">अस्सल भारतीय चव</p>
+            <p style="margin-top: 30px; font-size: 0.85rem; opacity: 0.8; letter-spacing: 2px;">WELCOME</p>
+        </div>
+    </div>
+
+    <!-- 2. MAIN HEADER -->
+    <header id="main-header">
+        <div class="header-logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <div class="header-title-container">
+            <h2>हॉटेल जलसा</h2>
+            <div class="header-tagline">अस्सल भारतीय चव</div>
+        </div>
+    </header>
+
+    <!-- 3. CATEGORY BAR -->
+    <div class="category-container" id="category-bar"></div>
+
+    <!-- 4. MENU GRID -->
+    <div class="menu-wrapper">
+        <div class="menu-grid" id="menu-grid"></div>
+    </div>
+
+    <!-- 5. COMPACT MODAL -->
+    <div id="modal-overlay"></div>
+    <div id="dish-modal">
+        <img src="" alt="" id="modal-img" class="modal-img">
+        <div class="modal-body">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px;">
+                <div>
+                    <h2 id="modal-title" class="modal-title"></h2>
+                    <p id="modal-subtitle" class="modal-subtitle"></p>
+                </div>
+                <div id="modal-diet" class="diet-icon"></div>
+            </div>
+            <p id="modal-desc" class="modal-desc"></p>
+            <div class="modal-stats">
+                <div>
+                    <label class="modal-price-label">किंमत (PRICE)</label>
+                    <span id="modal-price" class="modal-price-val"></span>
+                </div>
+                <div id="modal-spice" style="font-size: 1.1rem;"></div>
+            </div>
+        </div>
+        <div class="close-btn-container">
+            <button onclick="closeModal()" class="close-modal-btn">परत जा (BACK)</button>
+        </div>
+    </div>
+
+    <script>
+        const menuData = [
+            { id: 1, name: "Veg Manchurian", marathi: "व्हेज मंचुरियन", category: "Starters", price: 160, desc: "Crispy fried vegetable balls tossed in a tangy and spicy Manchurian sauce.", veg: true, spice: 2, img: "1.jpg" },
+            { id: 2, name: "Veg Hakka Noodles", marathi: "व्हेज हक्का नूडल्स", category: "Starters", price: 180, desc: "Classic stir-fried noodles with crunchy vegetables and oriental spices.", veg: true, spice: 1, img: "2.jfif" },
+            { id: 3, name: "Chicken Tandoori", marathi: "चिकन तंदूरी", category: "Starters", price: 320, desc: "Whole chicken marinated in yogurt and traditional spices, roasted to perfection in a clay oven.", veg: false, spice: 2, img: "13.jpg" },
+            { id: 4, name: "Paneer Chilli", marathi: "पनीर चिली", category: "Starters", price: 210, desc: "Soft paneer cubes tossed with bell peppers and onions in a spicy soya sauce.", veg: true, spice: 3, img: "3.webp" },
+            { id: 5, name: "Paneer Tikka Masala", marathi: "पनीर टिक्का मसाला", category: "Main Course (Veg)", price: 260, desc: "Grilled paneer cubes cooked in a rich, creamy tomato and onion based gravy.", veg: true, spice: 2, img: "4.jfif" },
+            { id: 6, name: "Veg Kolhapuri", marathi: "व्हेज कोल्हापुरी", category: "Main Course (Veg)", price: 220, desc: "A spicy mixed vegetable curry from the heart of Kolhapur with thick red gravy.", veg: true, spice: 3, img: "5.jfif" },
+            { id: 7, name: "Chicken Handi", marathi: "चिकन हंडी", category: "Main Course (Non-Veg)", price: 380, desc: "Tender chicken pieces cooked in a rich aromatic gravy inside a traditional handi.", veg: false, spice: 2, img: "6.jfif" },
+            { id: 8, name: "Butter Chicken", marathi: "बटर चिकन", category: "Main Course (Non-Veg)", price: 350, desc: "Creamy, buttery tomato gravy with succulent pieces of tandoori chicken.", veg: false, spice: 1, img: "7.jpg" },
+            { id: 9, name: "Dal Tadka", marathi: "डाळ तडका", category: "Main Course (Veg)", price: 160, desc: "Yellow lentils tempered with cumin, garlic, and whole red chillies.", veg: true, spice: 1, img: "8.webp" },
+            { id: 10, name: "Butter Naan", marathi: "बटर नान", category: "Breads", price: 45, desc: "Soft and fluffy leavened bread brushed with premium butter.", veg: true, spice: 0, img: "9.avif" },
+            { id: 11, name: "Chicken Dum Biryani", marathi: "चिकन दम बिर्याणी", category: "Rice & Biryani", price: 280, desc: "Fragrant basmati rice layered with spiced chicken and cooked on slow 'dum'.", veg: false, spice: 2, img: "14.jfif" },
+            { id: 12, name: "Gulab Jamun", marathi: "गुलाब जामुन", category: "Desserts", price: 80, desc: "Deep-fried milk dumplings soaked in cardamom flavored sugar syrup.", veg: true, spice: 0, img: "10.webp" },
+            { id: 13, name: "Masala Buttermilk", marathi: "मसाला ताक", category: "Beverages", price: 40, desc: "Refreshing yogurt-based drink flavored with ginger, chillies, and coriander.", veg: true, spice: 1, img: "12.jpg" }
+        ];
+
+        const categories = ["All", "Starters", "Main Course (Veg)", "Main Course (Non-Veg)", "Breads", "Rice & Biryani", "Desserts", "Beverages"];
+        
+        window.onload = () => {
+            renderCategories();
+            renderDishes("All");
+            
+            const intro = document.getElementById('intro-screen');
+            const handleIntroFinish = () => {
+                intro.classList.add('slide-up');
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                }, 1200);
+            };
+
+            setTimeout(handleIntroFinish, 4000);
+            intro.onclick = handleIntroFinish;
+        };
+
+        function renderCategories() {
+            const container = document.getElementById('category-bar');
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `cat-btn ${cat === "All" ? 'active' : ''}`;
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderDishes(cat);
+                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function renderDishes(category) {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = '';
+            const filtered = category === "All" ? menuData : menuData.filter(d => d.category === category);
+            
+            filtered.forEach((dish, index) => {
+                const card = document.createElement('div');
+                card.className = 'dish-card';
+                card.innerHTML = `
+                    <img src="${dish.img}" class="dish-img" alt="${dish.name}" loading="lazy">
+                    <div class="dish-info">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <span class="dish-name">${dish.name}<br><small>${dish.marathi}</small></span>
+                            <div class="diet-icon ${dish.veg ? 'veg' : 'nonveg'}"></div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span class="dish-price">₹${dish.price}</span>
+                            <button class="view-btn" onclick="openModal(${dish.id})">Details</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                setTimeout(() => card.classList.add('show'), index * 50);
+            });
+        }
+
+        const overlay = document.getElementById('modal-overlay');
+        const modal = document.getElementById('dish-modal');
+
+        function openModal(id) {
+            const dish = menuData.find(d => d.id === id);
+            if(!dish) return;
+
+            document.getElementById('modal-img').src = dish.img;
+            document.getElementById('modal-title').innerText = dish.name;
+            document.getElementById('modal-subtitle').innerText = dish.marathi;
+            document.getElementById('modal-price').innerText = `₹${dish.price}`;
+            document.getElementById('modal-desc').innerText = dish.desc;
+            const spiceDiv = document.getElementById('modal-spice');
+            spiceDiv.innerHTML = '';
+            for(let i=0; i<3; i++) {
+                spiceDiv.innerHTML += i < dish.spice ? '🌶️' : '<span style="opacity: 0.2">🌶️</span>';
+            }
+            document.getElementById('modal-diet').className = `diet-icon ${dish.veg ? 'veg' : 'nonveg'}`;
+
+            overlay.style.display = 'block';
+            setTimeout(() => { 
+                overlay.style.opacity = '1'; 
+                modal.classList.add('open'); 
+            }, 10);
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 400);
+            document.body.style.overflow = 'auto';
+        }
+
+        overlay.onclick = closeModal;
+    </script>
+</body>
+</html>
